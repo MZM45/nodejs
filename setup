@@ -1,0 +1,7 @@
+ npm install bcrypt
+ npm install body
+ npm install ejs
+ npm install express
+ npm install mongoose
+ npm install nodemon
+ npm install parser
