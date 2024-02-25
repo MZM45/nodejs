@@ -1,0 +1,12 @@
+
+    <% if (comments.length === 0) { %>
+        <p>No comments available.</p>
+    <% } else { %>
+        <% comments.forEach(comment => { %>
+            <div class="comment">
+                <p><strong>Name:</strong> <%= comment.name %></p>
+                <p><strong>Comment:</strong> <%= comment.commentText %></p>
+            </div>
+        <% }); %>
+    <% } %>
+

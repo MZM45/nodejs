@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - DialogueDome</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    
+    <h1>Login to  DialogueDome</h1>
+    <a href="/home">Home</a>
+    <a href="/signup">Signup</a>
+    <br><br>
+    <form action="/login" method="POST">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <input type="submit" value="Login">
+    </form>
+    <a href="/login">Don't have an account? Signup here</a>
+    <div id="video-container">
+        <video autoplay muted loop id="video-background">
+            <source src="background.mp4" type="video/mp4">
+            <!-- Add additional video sources for different formats if necessary -->
+            Your browser does not support HTML5 video.
+        </video>
+    </div>
+</body>
+</html>
