@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { LoginCollection, CommentCollection } = require('./config');
 const path = require("path");
-
+const bcrypt = require('bcrypt');
 
 // for CSS
 
@@ -47,41 +47,95 @@ app.get('/newsfeed', async (req, res) => {
 
 
 // Signup Route
-app.post('/signup', async (req, res) => {
-    const { name, password } = req.body;
-    try {
-        const existingUser = await LoginCollection.findOne({ name });
-        if (existingUser) {
-            return res.send('User already exists. Please choose a different username.');
-        } else {
-            await LoginCollection.create({ name, password });
-            return res.send('Signup Successful!');
-        }
-    } catch (error) {
-        console.error(error);
-        return res.send('Error signing up user');
+// app.post('/signup', async (req, res) => {
+//     const { username, password } = req.body; // Destructure username and password directly
+//     try {
+//         const existingUser = await LoginCollection.findOne({ name: username }); // Use username instead of name
+//         if (existingUser) {
+//             return res.status(400).send('User already exists. Please choose a different username.'); // Return status 400 for bad request
+//         } else {
+//             await LoginCollection.create({ name: username, password }); // Use username instead of name
+//             return res.send('Signup Successful!');
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).send('Error signing up user'); // Return status 500 for internal server error
+//     }
+// });
+
+
+
+// // Login Route
+
+// app.post('/login', async (req, res) => {
+//     const { username, password } = req.body; // Destructure username and password directly
+//     try {
+//         const user = await LoginCollection.findOne({ name: username });
+//         if (user) {
+//             // User with the provided username exists, now check if the password matches
+//             if (user.password === password) {
+//                 const comments = await CommentCollection.find({});
+//                 res.render("newsfeed", { username: req.body.username, comments });
+//             } else {
+//                 res.send('Invalid credentials');
+//             }
+//         } else {
+//             res.send('Invalid credentials');
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Error logging in');
+//     }
+// });
+app.post("/signup", async (req, res) => {
+
+    const data = {
+        name: req.body.username,
+        password: req.body.password
     }
+
+    // Check if the username already exists in the database
+    const existingUser = await LoginCollection.findOne({ name: data.name });
+
+    if (existingUser) {
+        res.send('User already exists. Please choose a different username.');
+    } else {
+        // Hash the password using bcrypt
+        const saltRounds = 10; // Number of salt rounds for bcrypt
+        const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+
+        data.password = hashedPassword; // Replace the original password with the hashed one
+
+        const userdata = await LoginCollection.insertMany(data);
+        res.send("Signup successful");
+
+
+        console.log(userdata);
+    }
+
 });
 
-
-// Login Route
-
-app.post('/login', async (req, res) => {
-    const { name, password } = req.body;
+app.post("/login", async (req, res) => {
     try {
-        const user = await LoginCollection.findOne({ name });
-        const pass = await LoginCollection.findOne({password });
-        if (user && pass) {
+        const check = await LoginCollection.findOne({ name: req.body.username });
+        if (!check) {
+            return res.send("User name not found");
+        }
+        // Compare the hashed password from the database with the plaintext password
+        const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
+        if (!isPasswordMatch) {
+            return res.send("Wrong password");
+        } else {
             const comments = await CommentCollection.find({});
-            res.render("newsfeed", { username: req.body.username, comments });
-        } else {
-            res.send('Invalid credentials');
+            return res.render("newsfeed", { username: req.body.username, comments });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error logging in');
+        return res.status(500).send("Error occurred while logging in");
     }
 });
+
+
 // Add Comment Route
 app.post('/add-comment', async (req, res) => {
     const { commentText,username } = req.body;
