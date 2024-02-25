@@ -1,0 +1,38 @@
+body {
+    background-color: black;
+    color: darkorange;
+    text-align: center; /* Center-align text within the body */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: darkorange;
+    margin-top: 20px; /* Add some top margin to headings for spacing */
+}
+
+p, span, a, label, input, button {
+    color: darkorange;
+    margin-top: 10px; /* Add some top margin to paragraphs, links, labels, inputs, and buttons for spacing */
+    text-align: center; /* Center-align text within these elements */
+}
+#video-container {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1; /* Place the video behind other elements */
+    overflow: hidden; /* Hide overflowing video content */
+}
+
+/* CSS for the video */
+#video-background {
+    width: auto;
+    height: auto;
+    object-fit: cover; /* Cover the entire container */
+}
+
+/* CSS for the content */
+.content {
+    position: relative; /* Set position to relative to enable stacking content on top of video */
+    z-index: 1; /* Ensure content appears on top of the video */
+}

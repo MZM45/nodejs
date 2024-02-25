@@ -1,0 +1,81 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    color: orange; /* Text color */
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 1; /* Ensure header content is above the video */
+}
+
+h1 {
+    margin-bottom: 10px;
+    color: orange; 
+}
+
+#logoutForm {
+    margin-top: 10px;
+}
+
+main {
+    padding: 20px;
+    position: relative;
+    z-index: 1; /* Ensure main content is above the video */
+}
+
+h2 {
+    margin-bottom: 10px;
+    color: orange; 
+}
+
+#comments {
+    background-color: rgba(226, 121, 0, 0.8); /* Semi-transparent background */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1; /* Ensure comments section is above the video */
+}
+
+#video-container {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    z-index: -1; /* Ensure video is behind other content */
+}
+
+#video-background {
+    min-width: 100%; 
+    min-height: 100%;
+}
+#logoutForm input[type="submit"] {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    color: orange; 
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#logoutForm input[type="submit"]:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+.recent-comments-title {
+    color: orange;
+}
+
+.comment{
+    color: orange;
+}
