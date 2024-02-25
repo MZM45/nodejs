@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Connect to the database
-mongoose.connect("mongodb://localhost:27017/Website", { 
+mongoose.connect("mongodb+srv://MZM45:shesha007@dialoguedome.hdmwsjh.mongodb.net/?retryWrites=true&w=majority&appName=DialogueDome", { 
    
 })
 .then(() => {
