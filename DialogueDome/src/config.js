@@ -11,15 +11,14 @@ mongoose.connect("mongodb+srv://MZM45:shesha007@dialoguedome.hdmwsjh.mongodb.net
     console.error("Error connecting to database:", err);
 });
 
-// Create Schema for Login
 const loginSchema = new mongoose.Schema({
-    username: {
-        type: String,
-      
+    name: {
+        type:String,
+        required: true
     },
     password: {
         type: String,
-      
+        required: true
     }
 });
 
@@ -43,3 +42,4 @@ module.exports = {
     LoginCollection,
     CommentCollection
 };
+
