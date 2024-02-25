@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Feed</title>
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="/newsfeedstyle.css">
+</head>
+<body>
+    <div id="video-container">
+        <video autoplay muted loop id="video-background">
+            <source src="newsfeedbg.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <header>
+        <h1>Welcome to the News Feed</h1>
+        <!-- Display the name of the logged-in user -->
+        <p>Welcome, <span id="username"><%= username %></span>!</p>
+
+        <!-- Logout button -->
+        <form id="logoutForm" action="/logout" method="post">
+            <input type="submit" value="Logout">
+        </form>
+    </header>
+
+    <main>
+        <h2 class="recent-comments-title">Recent Comments</h2>
+        <!-- Display comments made by other users -->
+        <% if (comments.length === 0) { %>
+            <p>No comments available.</p>
+        <% } else { %>
+            <% comments.forEach(comment => { %>
+                <div class="comment">
+                    <p><strong>Name:</strong> <%= comment.username %></p>
+                    <p><strong>Comment:</strong> <%= comment.commentText %></p>
+                    <br> <!-- No need for </br>, use <br> instead -->
+                </div>
+            <% }); %>
+        <% } %>
+    </main>
+    
+    <form id="addCommentForm" action="/add-comment" method="post">
+        <input type="text" id="commentText" name="commentText"><br>
+        <!-- Add a hidden input field to store the username -->
+        <input type="hidden" id="username" name="username" value="<%= username %>">
+        <input type="submit" value="Add Comment">
+    </form>
+
+</body>
+</html>
