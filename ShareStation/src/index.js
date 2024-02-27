@@ -9,9 +9,10 @@ const app = express();
 app.use(express.static("public"));
 
 // Connect to MongoDB
-mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(config.mongoURI)
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.error('MongoDB Connection Error:', err));
+
 
 // Define MongoDB schema and model
 const fileSchema = new mongoose.Schema({
