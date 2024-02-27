@@ -48,15 +48,24 @@ app.get('/', (req, res) => {
 });;
 
 // Handle file upload
+// Handle file upload
 app.post('/upload', upload.single('file'), (req, res) => {
     if (req.file) {
+        // Read the file content
+        const fileData = fs.readFileSync(req.file.path);
+
+        // Create a new File document
         const newFile = new File({
             filename: req.file.filename,
-            path: req.file.path
+            contentType: req.file.mimetype,
+            data: fileData
         });
 
+        // Save the file document to MongoDB
         newFile.save()
             .then(file => {
+                // Remove the file from the disk after saving it to MongoDB
+                fs.unlinkSync(req.file.path);
                 res.send('File uploaded successfully');
             })
             .catch(err => {
@@ -67,6 +76,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
         res.send('No file uploaded');
     }
 });
+
 
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
